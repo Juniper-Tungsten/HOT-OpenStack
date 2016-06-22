@@ -3,31 +3,39 @@ heat_template_version: 2015-04-30
 description: > Heat template to create a NAT v2 service chain (AUTHOR: SAVITHRU LOKANATH)
 
 parameters:
+
   mgmt_network_name:
     type: string
     description: Name of management network to be created
+    
   left_network_name:
     type: string
     description: Name of left network to be created
+    
   right_network_name:
     type: string
     description: Name of right network to be created
+    
   left_network_name_fqdn:
     type: string
     description: FQ Name of the left network
+    
   right_network_name_fqdn:
     type: string
     description: FQ Name of the right network
+    
   image:
     type: string
     description: Name of the image
+    
   flavor:
     type: string
     description: Flavor
+    
   server_key_name:
     type: string
     description: Virtual Machine key name
-  
+    
   domain:
     type: string
     description: Name of the Domain
