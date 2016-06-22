@@ -39,61 +39,80 @@ parameters:
   domain:
     type: string
     description: Name of the Domain
+    
   service_template_name:
     type: string
     label: Service template fq name
     description: Service template for port tuple
+    
   service_template_properties_version:
     type: string
     description: Indicates service version
+    
   service_template_properties_service_mode:
     type: string
     description: service mode
+    
   service_template_properties_service_type:
     type: string
     description: service type
+    
   service_template_properties_image_name:
     type: string
     description: Name of the image
+    
   service_template_properties_flavor:
     type: string
     description: Flavor
+    
   service_template_properties_interface_type_service_interface_type_1:
     type: string
     description: service_interface_type for the ServiceTemplate
+    
   service_template_properties_interface_type_shared_ip_1:
     type: boolean
     description: shared_ip for the ServiceTemplate
+    
   service_template_properties_interface_type_static_route_enable_1:
     type: boolean
     description: static_route_enable for the ServiceTemplate
+    
   service_template_properties_interface_type_service_interface_type_2:
     type: string
     description: service_interface_type for the ServiceTemplate
+    
   service_template_properties_interface_type_shared_ip_2:
     type: boolean
     description: shared_ip for the ServiceTemplate
+    
   service_template_properties_interface_type_static_route_enable_2:
     type: boolean
     description: static_route_enable for the ServiceTemplate
+    
   service_template_properties_interface_type_service_interface_type_3:
     type: string
     description: service_interface_type for the ServiceTemplate
+    
   service_template_properties_interface_type_shared_ip_3:
     type: boolean
     description: shared_ip for the ServiceTemplate
+    
   service_template_properties_interface_type_static_route_enable_3:
     type: boolean
     description: static_route_enable for the ServiceTemplate
+    
   service_template_properties_service_scaling:
     type: string
     description: Indicates whether service scaling is enabled
+    
   service_template_properties_availability_zone_enable:
     type: string
     description: Indicates availability zone is enabled
+    
   service_template_properties_ordered_interfaces:
     type: string
     description: Indicates service interfaces are ordered
+    
   service_template_properties_service_virtualization_type:
     type: string
     description: Indicates virtualization type
@@ -102,25 +121,32 @@ parameters:
     type: string
     label: Service instance name
     description: Service instance for port tuple
+    
   service_instance_fq_name:
     type: string
     label: Service instance fq name
     description: Service instance FQDN for port tuple
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_ip_ip_prefix_2:
     type: string
     description: ip_prefix for the ServiceInstance
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_ip_ip_prefix_len_2:
     type: number
     description: ip_prefix_len for the ServiceInstance
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_mac_2:
     type: string
     description: mac for the ServiceInstance
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_ip_ip_prefix_3:
     type: string
     description: ip_prefix for the ServiceInstance
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_ip_ip_prefix_len_3:
     type: number
     description: ip_prefix_len for the ServiceInstance
+    
   service_instance_properties_interface_list_allowed_address_pairs_allowed_address_pair_address_mode_3:
     type: string
     description: address_mode for the ServiceInstance
@@ -128,21 +154,27 @@ parameters:
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_1:
     type: string
     description: subnet prefix for mgmt network
+    
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_1:
     type: string
     description: subnet prefix len for mgmt network
+    
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_2:
     type: string
     description: subnet prefix for left network
+    
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_2:
     type: string
     description: subnet prefix len for left network
+    
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_3:
     type: string
     description: subnet prefix for right network
+    
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_3:
     type: string
     description: subnet prefix len for right network
+    
   network_ipam_refs_data_ipam_subnets_addr_from_start_true:
     type: boolean
     description: Address allocation from start of the pool
@@ -150,18 +182,23 @@ parameters:
   service_instance_name: 
     type: string
     description: Name of the SVM
+    
   flavor: 
     type: string
     description: Flavor of the end VMs
+    
   image: 
     type: string
     description: Name of the end VM image
+  
   left_vm_name:
     type: string
     description: Name of the left VM
+    
   right_vm_name: 
     type: string
     description: Name of the right VM
+    
   port_tuple_name:
     type: string
     description: Name of the port tuple
@@ -169,27 +206,35 @@ parameters:
   service_policy_name:
     type: string
     description: Name of the Policy
+    
   policy_fq_name:
     type: string
-    description: FQDN of the Policy 
+    description: FQDN of the Policy
+    
   simple_action:
     type: string
     description: Pass or Deny
+    
   protocol:
     type: string
     description: Protocol
+    
   src_port_end:
     type: number
     description: End of the Source Port Range
+    
   src_port_start:
     type: number
     description: Start of the Source Port Range
+    
   direction:
     type: string
     description: Direction of the Policy
+    
   dst_port_end:
     type: number
     description: End of the Destination Port Range
+    
   dst_port_start:
     type: number
     description: Start of the Destination Port Range
