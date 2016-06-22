@@ -227,7 +227,7 @@ resources:
 
   service_instance:
     type: OS::Contrail::ServiceInstance
-    depends_on: [ nat_service_template,template_VirtualNetwork_Mgmt,template_VirtualNetwork_1,template_VirtualNetwork_2 ]
+    depends_on: [ nat_service_template, template_VirtualNetwork_Mgmt, template_VirtualNetwork_1, template_VirtualNetwork_2 ]
     properties:
       name: { get_param: service_instance_name }
       service_template: { get_resource: nat_service_template }
@@ -303,10 +303,10 @@ resources:
 outputs:
   service_instance_fq_name:
     description: FQ name of the service template
-    value: { get_attr: [ service_instance, fq_name] }
+    value: { get_attr: [ service_instance, fq_name ] }
   service_instance_vms:
     description: List of service VMs
-    value: { get_attr: [ service_instance, virtual_machines] }
+    value: { get_attr: [ service_instance, virtual_machines ] }
   num_active_service_instance_vms:
     description: Number of active service VMs
-    value: { get_attr: [ service_instance, active_service_vms] }
+    value: { get_attr: [ service_instance, active_service_vms ] }
