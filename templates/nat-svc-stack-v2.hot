@@ -1,7 +1,6 @@
 heat_template_version: 2015-04-30
 
-description: > 
-Heat template to create a NAT v2 service chain (AUTHOR: SAVITHRU LOKANATH)
+description: > Heat template to create a NAT v2 service chain (AUTHOR: SAVITHRU LOKANATH)
 
 parameters:
   mgmt_network_name:
