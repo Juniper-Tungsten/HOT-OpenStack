@@ -408,7 +408,7 @@ resources:
       max_size: 4
       min_size: 1
       resource:
-        type: scale.yaml
+        type: contrail_si_scale.yaml
         properties:
           image: { get_param: service_template_properties_image_name }
           flavor: { get_param: service_template_properties_flavor }
