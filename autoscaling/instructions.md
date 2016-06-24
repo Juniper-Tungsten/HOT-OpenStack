@@ -10,7 +10,7 @@ requires single_instance_scale.yaml ( call in [single_autoscale_env.yaml](https:
 
 requires contrail_si_scale.yaml ( call in [contrail_si_autoscale.yaml]())
 
-`# heat stack-create <stack-name> -f contrail_si_autoscale.yaml -e contrail_si_autoscal.env`
+`# heat stack-create <stack-name> -f contrail_si_autoscale.yaml -e contrail_si_autoscale.env`
 
 
 
