@@ -1,7 +1,6 @@
 heat_template_version: 2015-04-30
 
-description: >
-  HOT template for service-instance scaling
+description: Autoscaling Contrail Cloud HOT
 
 parameters:
   virtual_network_1:

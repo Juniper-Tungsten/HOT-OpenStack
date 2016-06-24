@@ -1,5 +1,7 @@
 heat_template_version: 2015-04-30
 
+description: Autoscaling Contrail Cloud HOT
+
 parameters:
   service_template_name:
     type: string
