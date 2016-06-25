@@ -10,5 +10,3 @@ resources:
       flavor: m1.tiny
       networks:
         - network: left-network
-
-
