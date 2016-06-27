@@ -163,6 +163,7 @@ parameters:
   port_tuple_name:
     type: string
     description: name of Port Tuple
+
   service_policy_name:
     type: string
     description: Name of the Policy  
@@ -190,7 +191,32 @@ parameters:
   dst_port_start:
     type: number
     description: Start of the Destination Port Range
-
+  
+  autoscale_capacity:
+    type: number
+    description: The max number of instances created on breaching threshold
+  autoscale_max_size:
+    type: number
+    description: The max number of instances that autoscale can launch for a stack
+  autoscale_min_size:
+    type: number
+    description: The min number of instances that autoscale can launch for a stack
+  evaluation_period:
+    type: number
+    description: Period of evaluation in seconds
+  number_of_evaluation_cycles:
+    type: number
+    description: The number of Evaluation Cycles over which the metric is measured
+  metric_statistic:
+    type: string
+    description: The metric (avg, max, min)
+  alarm_low_threshold:
+    type: number
+    description: Lower threshold of metric cpu_util
+  alarm_high_threshold:
+    type: number
+    description: Higher threshold of metric cpu_util
+  
 
 resources:
   template_NetworkIpam_1:
@@ -406,9 +432,9 @@ resources:
     type: OS::Heat::AutoScalingGroup
     properties:
       cooldown: 60
-      desired_capacity: 1
-      max_size: 4
-      min_size: 1
+      desired_capacity: { get_param: autoscale_capacity }
+      max_size: { get_param: autoscale_max_size }
+      min_size: { get_param: autoscale_min_size }
       resource:
         type: contrail_si_scale.yaml
         properties:
@@ -438,10 +464,10 @@ resources:
     type: OS::Ceilometer::Alarm
     properties:
       meter_name: cpu_util
-      statistic: avg
-      period: 60
-      evaluation_periods: 1
-      threshold: 50
+      statistic: { get_param: metric_statistic }
+      period: { get_param: evaluation_period }
+      evaluation_periods: { get_param: number_of_evaluation_cycles }
+      threshold: { get_param: alarm_high_threshold }
       alarm_actions:
         - {get_attr: [scaleup_policy, alarm_url]}
       comparison_operator: gt
@@ -458,10 +484,10 @@ resources:
     type: OS::Ceilometer::Alarm
     properties:
       meter_name: cpu_util
-      statistic: avg
-      period: 60
-      evaluation_periods: 1
-      threshold: 10
+      statistic: { get_param: metric_statistic }
+      period: { get_param: evaluation_period }
+      evaluation_periods: { get_param: number_of_evaluation_cycles }
+      threshold: { get_param: alarm_low_threshold }
       alarm_actions:
         - {get_attr: [scaledown_policy, alarm_url]}
       comparison_operator: lt
