@@ -21,7 +21,7 @@ Templates are located here
 
 ### /env
 
-Parameter files are listed here
+Parameter files are located here
 
 
 
