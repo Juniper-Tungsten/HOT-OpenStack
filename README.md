@@ -1,5 +1,5 @@
 # HOT-OpenStack
-Heat Orchestration Templates for OpenStack/Contrail
+Heat Orchestration Templates for Contrail/OpenContrail
 
 # RUN 
 
