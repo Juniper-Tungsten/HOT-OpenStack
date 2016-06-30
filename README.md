@@ -17,7 +17,7 @@ Heat Orchestration Templates for Contrail/OpenContrail
 
 ### /templates
 
-Templates are located here
+Template files are located here
 
 ### /env
 
