@@ -23,7 +23,7 @@ parameters:
     description: mgmt_virtual_network for the ServiceInstance
   image:
     type: string
-    description: Name of the image
+    description: Name of image
   flavor:
     type: string
     description: Flavor
