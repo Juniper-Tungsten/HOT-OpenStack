@@ -1,5 +1,7 @@
 heat_template_version: 2014-10-16
+
 description: Example auto scale group, policy and alarm
+
 resources:
   scaleup_group:
     type: OS::Heat::AutoScalingGroup
