@@ -1,0 +1,82 @@
+heat_template_version: 2014-10-16
+
+parameters:
+  private_net_name:
+    type: string
+  private_net_cidr:
+    type: string
+  private_net_gateway:
+    type: string
+  mac_address_1:
+    type: string
+  vlan_tag_1:
+    type: number
+  mac_address_2:
+    type: string
+  vlan_tag_2:
+    type: number
+  name_1:
+    type: string
+  name_2:
+    type: string
+  parentID_1:
+    type: string
+  parentID_2:
+    type: string
+
+resources:
+  private_net:
+    type: OS::Neutron::Net
+    properties:
+      name: { get_param: private_net_name }
+
+  private_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: private_net }
+      cidr: { get_param: private_net_cidr }
+      gateway_ip: { get_param: private_net_gateway }
+  
+  template_VirtualMachineInterface_1:
+    type: OS::ContrailV2::VirtualMachineInterface
+    properties:
+      name: { get_param: name_1 }
+      virtual_network_refs: [{ get_resource: private_net }]
+      virtual_machine_interface_properties:
+        {
+          virtual_machine_interface_properties_sub_interface_vlan_tag: { get_param: vlan_tag_1 },
+        }    
+      virtual_machine_interface_mac_addresses:
+        {
+          virtual_machine_interface_mac_addresses_mac_address: [{ get_param: mac_address_1 }],
+        }
+      virtual_machine_interface_refs: [{ get_param: parentID_1 }]
+
+  template_VirtualMachineInterface_2:
+    type: OS::ContrailV2::VirtualMachineInterface
+    properties:
+      name: { get_param: name_2 }
+      virtual_network_refs: [{ get_resource: private_net }]
+      virtual_machine_interface_properties:
+        {
+          virtual_machine_interface_properties_sub_interface_vlan_tag: { get_param: vlan_tag_2 },
+        }    
+      virtual_machine_interface_mac_addresses:
+        {
+        virtual_machine_interface_mac_addresses_mac_address: [{ get_param: mac_address_2 }]
+        }
+      virtual_machine_interface_refs: [{ get_param: parentID_2 }]
+
+  instanceIP_1_1:
+    type: OS::ContrailV2::InstanceIp
+    depends_on: [ template_VirtualMachineInterface_1 ]
+    properties:
+      virtual_network_refs: [{ get_resource: private_net }]
+      virtual_machine_interface_refs: [{ get_resource: template_VirtualMachineInterface_1 }]
+
+  instanceIP_1_2:
+    type: OS::ContrailV2::InstanceIp
+    depends_on: [ template_VirtualMachineInterface_2 ]
+    properties:
+      virtual_network_refs: [{ get_resource: private_net }]
+      virtual_machine_interface_refs: [{ get_resource: template_VirtualMachineInterface_2 }]
