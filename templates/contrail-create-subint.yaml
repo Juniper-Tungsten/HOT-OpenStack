@@ -1,5 +1,7 @@
 heat_template_version: 2014-10-16
 
+description: HOT to create sub-interfaces on a server instance using Contrail V2 plugin
+
 parameters:
   private_net_name_0:
     type: string
