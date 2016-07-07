@@ -1,7 +1,5 @@
 heat_template_version: 2014-10-16
 
-description: HOT to create sub-interfaces on a server instance using Contrail V2 plugin
-
 parameters:
   private_net_name_0:
     type: string
@@ -14,6 +12,14 @@ parameters:
   private_net_cidr_1:
     type: string
   private_net_gateway_1:
+    type: string
+  primary_interface_1:
+    type: string
+  primary_interface_2:
+    type: string
+  sub_interface_1:
+    type: string
+  sub_interface_2:
     type: string
   vlan_tag_1:
     type: number
@@ -51,6 +57,18 @@ resources:
       flavor: { get_param: flavor }
       networks:
         - network: { get_resource: private_net_0 }
+      user_data: 
+        str_replace:
+          template: |
+            #!/bin/bash
+            mkdir /root/test-folder
+            modprobe 8021q
+            vconfig add $primary_interface $vlan_tag
+            dhclient $sub_interface
+          params:
+            $primary_interface: { get_param: primary_interface_1 }
+            $vlan_tag: { get_param: vlan_tag_1 }
+            $sub_interface: { get_param: sub_interface_1 }
 
   server_2:
     type: OS::Nova::Server
@@ -60,6 +78,18 @@ resources:
       flavor: { get_param: flavor }
       networks:
         - network: { get_resource: private_net_0 }
+      user_data: 
+        str_replace:
+          template: |
+            #!/bin/bash
+            mkdir /root/test-folder
+            modprobe 8021q
+            vconfig add $primary_interface $vlan_tag
+            dhclient $sub_interface 
+          params:
+            $primary_interface: { get_param: primary_interface_2 }
+            $vlan_tag: { get_param: vlan_tag_1 }
+            $sub_interface: { get_param: sub_interface_2 }
 
   private_net_1:
     type: OS::Neutron::Net
