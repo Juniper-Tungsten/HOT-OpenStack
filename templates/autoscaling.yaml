@@ -1,6 +1,6 @@
 heat_template_version: 2015-04-30
 
-description: Autoscaling Contrail Cloud HOT
+description: Autoscaling Contrail HOT
 
 parameters:
   service_template_name:
@@ -378,4 +378,3 @@ resources:
       alarm_actions:
         - {get_attr: [scaledown_policy, alarm_url]}
       comparison_operator: lt
-

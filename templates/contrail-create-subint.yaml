@@ -1,4 +1,6 @@
-heat_template_version: 2014-10-16
+heat_template_version: 2015-04-30
+
+description: HOT to create sub-interface (VLAN) on instances
 
 parameters:
   private_net_name_0:
