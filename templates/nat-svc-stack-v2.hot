@@ -1,6 +1,7 @@
 heat_template_version: 2015-04-30
 
-description: > Heat template to create a NAT v2 service chain (AUTHOR: SAVITHRU LOKANATH)
+description: > 
+Heat template to create a NAT v2 service chain
 
 parameters:
 
@@ -31,10 +32,6 @@ parameters:
   flavor:
     type: string
     description: Flavor
-    
-  server_key_name:
-    type: string
-    description: Virtual Machine key name
     
   domain:
     type: string
@@ -527,7 +524,6 @@ resources:
       name: {get_param: left_vm_name }
       image: { get_param:  image }
       flavor: { get_param: flavor }
-      key_name: { get_param: server_key_name }
       networks:
         - port: { get_resource: template_VirtualMachineInterface_4 }
 
@@ -538,7 +534,6 @@ resources:
       name: {get_param: right_vm_name }
       image: { get_param:  image }
       flavor: { get_param: flavor }
-      key_name: { get_param: server_key_name }
       networks:
         - port: { get_resource: template_VirtualMachineInterface_5 }
 
