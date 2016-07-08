@@ -1,7 +1,7 @@
 heat_template_version: 2013-05-23
 
 description: > 
-Heat template to create a NAT v1 service chain (AUTHOR: SAVITHRU LOKANATH)
+Heat template to create a NAT v1 service chain
 
 parameters:
   mgmt_network_name:
@@ -135,11 +135,6 @@ parameters:
   server_flavor:
     type: string
     description: Virtual Machine Flavor
-
-  server_key_name:
-    type: string
-    description: Virtual Machine key name
-
 
 resources:
   template_NetworkIpam_1:
@@ -284,7 +279,6 @@ resources:
       name: { get_param: server_left_name }
       image: { get_param: server_image }
       flavor: { get_param: server_flavor }
-      key_name: { get_param: server_key_name }
       networks: 
         - network: { get_resource: template_VirtualNetwork_1 }
                         
@@ -295,7 +289,6 @@ resources:
       name: { get_param: server_right_name }
       image: { get_param: server_image }
       flavor: { get_param: server_flavor }
-      key_name: { get_param: server_key_name }
       networks:
         - network: { get_resource: template_VirtualNetwork_2 }
 
