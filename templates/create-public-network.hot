@@ -7,10 +7,6 @@ parameters:
     type: string
     description: Name of right network to be created
 
-  public_network_name_fqdn:
-    type: string
-    description: FQ Name of the right network
-
   public_network_subnet_prefix:
     type: string
     description: Prefix of the Public Network
