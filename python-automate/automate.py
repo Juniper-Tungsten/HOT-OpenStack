@@ -76,7 +76,7 @@ def main():
 	""" FUNCTION TO PERFORM INIT """
 
 	try:
-		dev = Device(host='10.84.18.253', user='root', password='c0ntrail123').open()
+		dev = Device(host='', user='', password='').open()
         	vrftbl = VRF(dev).get(values=True)
 		iftbl = InterfaceTable(dev).get()
 		routetbl = RouteTable(dev).get(protocol="static")
