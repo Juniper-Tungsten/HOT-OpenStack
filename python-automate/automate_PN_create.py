@@ -37,6 +37,8 @@ globals().update(FactoryLoader().load(yaml.load(YamlTable)))
 
 def pushParams(prefix, route_target, hot_file, env_file, stack_name):
 
+	""" FUNCTION TO CREATE HEAT STACK """
+
 	prefix, prefix_len = prefix.split("/", 1)
 	default_gw_list = prefix.split(".")
         default_gw_list[-1] = "1"
