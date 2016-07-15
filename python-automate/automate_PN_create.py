@@ -44,7 +44,6 @@ def pushParams(prefix, route_target, hot_file, env_file, stack_name):
         default_gw_list[-1] = "1"
 	default_gw = '.'.join(default_gw_list)
 	
-	#env_file = str(sys.argv[2])
 	env_file_bak = env_file + ".bak.env"
 
 	if os.path.isfile(env_file):
@@ -121,7 +120,6 @@ def main():
 	iftbl = InterfaceTable(dev).get()
 	routetbl = RouteTable(dev).get(protocol="static")
        	
-	#routing_instance_name = str(sys.argv[1])
 	interface, route_target = routingInstance(vrftbl, routing_instance_name)
 	peer_logical = peerUnit(iftbl, interface)
 	prefix = getPrefix(routetbl, peer_logical)
