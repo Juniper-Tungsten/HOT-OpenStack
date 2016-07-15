@@ -1,5 +1,8 @@
 #!/usr/local/bin/python2.7
 
+#Program to Automate Public-Net Creation
+#Contact: slokanath at juniper dot net
+
 import sys, os, argparse, yaml
 from shutil import copyfile
 from jnpr.junos import Device
