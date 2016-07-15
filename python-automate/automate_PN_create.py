@@ -58,7 +58,7 @@ def pushParams(prefix, route_target, hot_file, env_file, stack_name):
 	
 def getPrefix(routetbl, peer_logical):
 
-	""" FUNCTION TO GET PREFIX """
+	""" FUNCTION TO GET THE PREFIX """
 
 	for route in routetbl:
 		if route.via == peer_logical:
