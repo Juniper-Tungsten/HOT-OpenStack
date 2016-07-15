@@ -104,27 +104,32 @@ def main():
 	parser.add_argument("-e", action="store",
         	            help="Specify ENV file")
 
-	args = parser.parse_args()
+	try:
+		args = parser.parse_args()
 
-	if args.n:
-		stack_name = args.n
-	if args.v:
-		routing_instance_name = args.v
-	if args.f:
-		hot_file = args.f
-	if args.e:
-		env_file = args.e
+		if args.n:
+			stack_name = args.n
+		if args.v:
+			routing_instance_name = args.v
+		if args.f:
+			hot_file = args.f
+		if args.e:
+			env_file = args.e
 
-	dev = Device(host='10.84.18.253', user='root', password='c0ntrail123').open()
-       	vrftbl = VRF(dev).get(values=True)
-	iftbl = InterfaceTable(dev).get()
-	routetbl = RouteTable(dev).get(protocol="static")
+		dev = Device(host='10.84.18.253', user='root', password='c0ntrail123').open()
+       		vrftbl = VRF(dev).get(values=True)
+		iftbl = InterfaceTable(dev).get()
+		routetbl = RouteTable(dev).get(protocol="static")
        	
-	interface, route_target = routingInstance(vrftbl, routing_instance_name)
-	peer_logical = peerUnit(iftbl, interface)
-	prefix = getPrefix(routetbl, peer_logical)
-	pushParams(prefix, route_target, hot_file, env_file, stack_name)
-	dev.close()
+		interface, route_target = routingInstance(vrftbl, routing_instance_name)
+		peer_logical = peerUnit(iftbl, interface)
+		prefix = getPrefix(routetbl, peer_logical)
+		pushParams(prefix, route_target, hot_file, env_file, stack_name)
+		dev.close()
+
+	except:
+		parser.print_help()
+		sys.exit(0)
         
 if __name__=="__main__":
 	main()
