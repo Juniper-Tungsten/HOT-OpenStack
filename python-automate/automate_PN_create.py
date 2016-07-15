@@ -1,8 +1,6 @@
 #!/usr/local/bin/python2.7
 
-import sys, os
-import argparse
-import yaml
+import sys, os, argparse, yaml
 from shutil import copyfile
 from jnpr.junos import Device
 from jnpr.junos.op.routes import RouteTable
