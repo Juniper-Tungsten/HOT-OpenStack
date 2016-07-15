@@ -1,8 +1,9 @@
 #!/usr/local/bin/python2.7
 
 import sys, os
+import argparse
 import yaml
-import fileinput
+from shutil import copyfile
 from jnpr.junos import Device
 from jnpr.junos.op.routes import RouteTable
 from jnpr.junos.op.ethport import EthPortTable
@@ -36,17 +37,20 @@ YamlTable = \
 
 globals().update(FactoryLoader().load(yaml.load(YamlTable)))
 
-def pushParams(prefix, route_target):
+def pushParams(prefix, route_target, hot_file, env_file, stack_name):
 
 	prefix, prefix_len = prefix.split("/", 1)
 	default_gw_list = prefix.split(".")
         default_gw_list[-1] = "1"
 	default_gw = '.'.join(default_gw_list)
 	
-	env_file = str(sys.argv[2])
+	#env_file = str(sys.argv[2])
+	env_file_bak = env_file + ".bak.env"
 
 	if os.path.isfile(env_file):
-		os.system("sed -i 's/{1}/" + prefix + "/g; s/{2}/" + prefix_len + "/g; s/{3}/" + default_gw + "/g; s/{4}/" + route_target + "/g' " + env_file)
+		copyfile(env_file, env_file_bak)
+		os.system("sed -i 's/{1}/" + prefix + "/g; s/{2}/" + prefix_len + "/g; s/{3}/" + default_gw + "/g; s/{4}/" + route_target + "/g' " + env_file_bak)
+		os.system("heat stack-create " + stack_name + " -f " + hot_file + " -e " + env_file_bak)
 	else:
 		print "ENV file is not present/Path wrong"		
 	
@@ -90,16 +94,38 @@ def main():
 
 	""" FUNCTION TO PERFORM INIT """
 
+	parser = argparse.ArgumentParser(add_help=True)
+
+	parser.add_argument("-n", action="store",
+                            help="Specify stack name")
+	parser.add_argument("-v", action="store",
+        	            help="Specify VRF")
+	parser.add_argument("-f", action="store",
+        	            help="Specify YAML/HOT file")
+	parser.add_argument("-e", action="store",
+        	            help="Specify ENV file")
+
+	args = parser.parse_args()
+
+	if args.n:
+		stack_name = args.n
+	if args.v:
+		routing_instance_name = args.v
+	if args.f:
+		hot_file = args.f
+	if args.e:
+		env_file = args.e
+
 	dev = Device(host='10.84.18.253', user='root', password='c0ntrail123').open()
        	vrftbl = VRF(dev).get(values=True)
 	iftbl = InterfaceTable(dev).get()
 	routetbl = RouteTable(dev).get(protocol="static")
        	
-	routing_instance_name = str(sys.argv[1])
+	#routing_instance_name = str(sys.argv[1])
 	interface, route_target = routingInstance(vrftbl, routing_instance_name)
 	peer_logical = peerUnit(iftbl, interface)
 	prefix = getPrefix(routetbl, peer_logical)
-	pushParams(prefix, route_target)
+	pushParams(prefix, route_target, hot_file, env_file, stack_name)
 	dev.close()
         
 if __name__=="__main__":
