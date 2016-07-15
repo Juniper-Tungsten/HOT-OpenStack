@@ -86,9 +86,8 @@ def routingInstance(vrftbl, routing_instance_name):
 
 	""" FUNCTION TO GET THE ROUTE TARGET/INTERFACE """
 
-	find = vrftbl[routing_instance_name]
         interface = [interface for interface in find.interface if interface.startswith('lt')][0]
-	route_target = find.vrf_target
+	route_target = vrftbl[routing_instance_name].vrf_target
 
         return interface, route_target
 
