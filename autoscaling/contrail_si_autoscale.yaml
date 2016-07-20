@@ -160,6 +160,15 @@ parameters:
   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_3:
     type: string
     description: subnet prefix len for right network
+  network_ipam_refs_data_ipam_subnets_subnet_default_gw_1:
+    type: string
+    description: Default gateway for mgmt network
+  network_ipam_refs_data_ipam_subnets_subnet_default_gw_2:
+    type: string
+    description: Default gateway for left network
+  network_ipam_refs_data_ipam_subnets_subnet_default_gw_3:
+    type: string
+    description: Default gateway for right network
   port_tuple_name:
     type: string
     description: name of Port Tuple
@@ -249,6 +258,7 @@ resources:
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_1 },
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_1 },
                 },
+		network_ipam_refs_data_ipam_subnets_default_gateway: { get_param: network_ipam_refs_data_ipam_subnets_subnet_default_gw_1 },
             }]
          }]
 
@@ -267,6 +277,7 @@ resources:
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_2 },
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_2 },
                 },
+		network_ipam_refs_data_ipam_subnets_default_gateway: { get_param: network_ipam_refs_data_ipam_subnets_subnet_default_gw_2 },
             }]
          }]
 
@@ -295,6 +306,7 @@ resources:
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_3 },
                   network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len: { get_param: network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len_3 },
                 },
+		network_ipam_refs_data_ipam_subnets_default_gateway: { get_param: network_ipam_refs_data_ipam_subnets_subnet_default_gw_3 },
             }]
          }]
 
