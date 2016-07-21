@@ -28,30 +28,12 @@ parameters:
   service_template_properties_interface_type_service_interface_type_1:
     type: string
     description: service_interface_type for the ServiceTemplate
-  service_template_properties_interface_type_shared_ip_1:
-    type: boolean
-    description: shared_ip for the ServiceTemplate
-  service_template_properties_interface_type_static_route_enable_1:
-    type: boolean
-    description: static_route_enable for the ServiceTemplate
   service_template_properties_interface_type_service_interface_type_2:
     type: string
     description: service_interface_type for the ServiceTemplate
-  service_template_properties_interface_type_shared_ip_2:
-    type: boolean
-    description: shared_ip for the ServiceTemplate
-  service_template_properties_interface_type_static_route_enable_2:
-    type: boolean
-    description: static_route_enable for the ServiceTemplate
   service_template_properties_interface_type_service_interface_type_3:
     type: string
     description: service_interface_type for the ServiceTemplate
-  service_template_properties_interface_type_shared_ip_3:
-    type: boolean
-    description: shared_ip for the ServiceTemplate
-  service_template_properties_interface_type_static_route_enable_3:
-    type: boolean
-    description: static_route_enable for the ServiceTemplate
   service_template_properties_service_scaling:
     type: string
     description: Indicates whether service scaling is enabled
@@ -329,27 +311,19 @@ resources:
           service_template_properties_version: { get_param: service_template_properties_version },
           service_template_properties_service_mode: { get_param: service_template_properties_service_mode },
           service_template_properties_service_type: { get_param: service_template_properties_service_type },
-          service_template_properties_image_name: { get_param: service_template_properties_image_name },
           service_template_properties_service_scaling: { get_param: service_template_properties_service_scaling },
           service_template_properties_interface_type:
             [
               {
               service_template_properties_interface_type_service_interface_type: { get_param: service_template_properties_interface_type_service_interface_type_1 },
-              service_template_properties_interface_type_shared_ip: { get_param: service_template_properties_interface_type_shared_ip_1 },
-              service_template_properties_interface_type_static_route_enable: { get_param: service_template_properties_interface_type_static_route_enable_1 },
               },
               {
               service_template_properties_interface_type_service_interface_type: { get_param: service_template_properties_interface_type_service_interface_type_2 },
-              service_template_properties_interface_type_shared_ip: { get_param: service_template_properties_interface_type_shared_ip_2 },
-              service_template_properties_interface_type_static_route_enable: { get_param: service_template_properties_interface_type_static_route_enable_2 },
               },
               {
               service_template_properties_interface_type_service_interface_type: { get_param: service_template_properties_interface_type_service_interface_type_3 },
-              service_template_properties_interface_type_shared_ip: { get_param: service_template_properties_interface_type_shared_ip_3 },
-              service_template_properties_interface_type_static_route_enable: { get_param: service_template_properties_interface_type_static_route_enable_3 },
               }
             ],
-          service_template_properties_flavor: { get_param: service_template_properties_flavor },
           service_template_properties_ordered_interfaces: { get_param: service_template_properties_ordered_interfaces },
           service_template_properties_service_virtualization_type: { get_param: service_template_properties_service_virtualization_type },
           service_template_properties_availability_zone_enable: { get_param: service_template_properties_availability_zone_enable },
@@ -443,7 +417,7 @@ resources:
   instance_group:
     type: OS::Heat::AutoScalingGroup
     properties:
-      cooldown: 60
+      cooldown: 30
       desired_capacity: { get_param: autoscale_capacity }
       max_size: { get_param: autoscale_max_size }
       min_size: { get_param: autoscale_min_size }
@@ -469,7 +443,7 @@ resources:
     properties:
       adjustment_type: change_in_capacity
       auto_scaling_group_id: { get_resource: instance_group }
-      cooldown: 60
+      cooldown: 30
       scaling_adjustment: 1
 
   cpu_alarm_high:
@@ -489,7 +463,7 @@ resources:
     properties:
       adjustment_type: change_in_capacity
       auto_scaling_group_id: { get_resource: instance_group }
-      cooldown: 60
+      cooldown: 30
       scaling_adjustment: -1
 
   cpu_alarm_low:
@@ -503,4 +477,3 @@ resources:
       alarm_actions:
         - {get_attr: [scaledown_policy, alarm_url]}
       comparison_operator: lt
-
