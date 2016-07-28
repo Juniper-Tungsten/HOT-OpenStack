@@ -24,7 +24,7 @@ def main():
 
         """ MAIN/AUTHENTICATE """
 
-        vnc = vnc_api.VncApi(username='admin', password='c0ntrail123', api_server_host = '10.84.18.1', tenant_name='admin')
+        vnc = vnc_api.VncApi(username='admin', password='', api_server_host = '192.168.1.1', tenant_name='admin')
         project = vnc.project_read(fq_name = ['default-domain', 'admin'])
 
         left_network_name = 'left_VN'
