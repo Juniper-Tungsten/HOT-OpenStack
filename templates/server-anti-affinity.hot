@@ -1,6 +1,6 @@
 heat_template_version: 2014-10-16 
 
-description: Server Anti-Affinity
+description: Server Anti-Affinity template
 
 parameters: 
   service-flavour: 
