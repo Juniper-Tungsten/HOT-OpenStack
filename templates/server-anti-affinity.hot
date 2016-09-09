@@ -1,51 +1,35 @@
 heat_template_version: 2014-10-16 
 
-description: Server Anti-Affinity template
+description: Server Anti-Affinity template. Launches each instance on a different compute node.
 
-parameters: 
+parameters:
+
   service-flavour: 
     type: string 
   image: 
     type: string 
   network_name:
     type: string
+  server_group_name:
+    type: string
+  number_of_servers:
+    type: string
 
 resources:
+
   server-grp: 
     type: OS::Nova::ServerGroup
     properties: 
       name: test-server-grp
       policies: [ 'anti-affinity' ] 
 
-  server-1: 
+  server: 
     type: OS::Nova::Server 
     properties: 
-      name: server-1 
+      size: { get_param: number_of_servers }
       flavor: { get_param: service-flavour } 
       image: { get_param: image } 
       networks: 
         - network: { get_param: network_name } 
       scheduler_hints: 
         group: { get_resource: server-grp } 
-
-  server-2: 
-    type: OS::Nova::Server 
-    properties: 
-      name: server-2 
-      flavor: { get_param: service-flavour } 
-      image: { get_param: image } 
-      networks: 
-      - network: { get_param: network_name } 
-      scheduler_hints: 
-        group: { get_resource: server-grp }
-
-  server-3:  
-    type: OS::Nova::Server
-    properties:
-      name: server-3
-      flavor: { get_param: service-flavour }
-      image: { get_param: image }
-      networks:
-      - network: { get_param: network_name }
-      scheduler_hints:
-        group: { get_resource: server-grp }
