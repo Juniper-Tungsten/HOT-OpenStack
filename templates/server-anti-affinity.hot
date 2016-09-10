@@ -4,7 +4,9 @@ description: Server Anti-Affinity template. Launches each instance on a differen
 
 parameters:
 
-  service-flavour: 
+  server_name:
+    type: string
+  server_flavor: 
     type: string 
   image: 
     type: string 
@@ -13,23 +15,34 @@ parameters:
   server_group_name:
     type: string
   number_of_servers:
-    type: string
+    type: number
 
 resources:
 
   server-grp: 
     type: OS::Nova::ServerGroup
     properties: 
-      name: test-server-grp
+      name: { get_param: server_group_name }
       policies: [ 'anti-affinity' ] 
 
-  server: 
-    type: OS::Nova::Server 
-    properties: 
-      size: { get_param: number_of_servers }
-      flavor: { get_param: service-flavour } 
-      image: { get_param: image } 
-      networks: 
-        - network: { get_param: network_name } 
-      scheduler_hints: 
-        group: { get_resource: server-grp } 
+  server-cluster:
+    type: OS::Heat::ResourceGroup
+    properties:
+      count: { get_param: number_of_servers }
+      resource_def: 
+        type: OS::Nova::Server
+        properties:
+          name: 
+            list_join: ['-',[ { get_param: server_name}, '%index%' ]]
+          flavor: { get_param: server_flavor }
+          image: { get_param: image }
+          networks:
+            - network: { get_param: network_name }
+          scheduler_hints:
+            group: { get_resource: server-grp }
+
+outputs:
+
+  instance_uuid:
+    description: UUID of deployed instances
+    value: { get_attr: [server-cluster, refs] }
