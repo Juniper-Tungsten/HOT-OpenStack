@@ -5,7 +5,7 @@
 
 import sys, os
 from vnc_api import vnc_api
-from novaclient.v1_1 import client
+from novaclient.v2 import client
 
 def launch_VM(user, password, project_name, auth_url, vm_name, image_name, flavor_type, network):
 
@@ -70,7 +70,7 @@ def main():
         project_name = 'admin'
         domain = 'default-domain'
         username = 'admin'
-        password = ''
+        password = 'c0ntrail123'
         api_server = '10.84.18.1'
         auth_url = "http://10.84.18.1:5000/v2.0/"
 
