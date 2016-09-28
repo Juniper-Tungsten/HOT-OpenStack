@@ -70,7 +70,7 @@ def main():
         project_name = 'admin'
         domain = 'default-domain'
         username = 'admin'
-        password = 'c0ntrail123'
+        password = ''
         api_server = '10.84.18.1'
         auth_url = "http://10.84.18.1:5000/v2.0/"
 
