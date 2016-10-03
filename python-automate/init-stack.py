@@ -48,7 +48,7 @@ def add_NetworkPolicy(policy_name, network, vnc, domain, project_name):
         print 'Policy "{}" attached to "{}"\n'.format(policy_name, network)
 
 
-def create_VirtualNetwork(network_name, network_subnet, network_mask, vnc, domain, project_name):
+def create_VirtualNetwork(network_name, network_subnet, network_mask, network_gateway, vnc, domain, project_name):
 
         """ FUNCTION TO CREATE VIRTUAL-NETWORK """
 
@@ -56,12 +56,12 @@ def create_VirtualNetwork(network_name, network_subnet, network_mask, vnc, domai
 
         vn_obj = vnc_api.VirtualNetwork(name=network_name, parent_obj=project)
         vn_obj.add_network_ipam(vnc_api.NetworkIpam(),
-                        vnc_api.VnSubnetsType([vnc_api.IpamSubnetType(subnet = vnc_api.SubnetType(network_subnet,network_mask))]))
+                        vnc_api.VnSubnetsType([vnc_api.IpamSubnetType(subnet = vnc_api.SubnetType(network_subnet,network_mask), default_gateway = network_gateway)]))
+
 
         vnc.virtual_network_create(vn_obj)
 
         print 'Network "{}" created successfully\n'.format(network_name)
-
 
 def main():
 
@@ -75,19 +75,21 @@ def main():
         auth_url = "http://10.84.18.1:5000/v2.0/"
 
         left_network_name = 'left_VN'
-        left_network_subnet = '192.168.200.0'
+        left_network_subnet = '1.1.1.0'
         left_network_mask = 24
+        left_network_gateway = '1.1.1.1'
 
         right_network_name = 'right_VN'
-        right_network_subnet = '192.168.201.0'
+        right_network_subnet = '2.2.2.0'
         right_network_mask = 24
+        right_network_gateway = '2.2.2.1'
 
         policy_name = 'red-to-blue'
 
         vnc = vnc_api.VncApi(username=username, password=password, api_server_host = api_server, tenant_name=project_name)
 
-        create_VirtualNetwork(left_network_name, left_network_subnet, left_network_mask, vnc, domain, project_name)
-        create_VirtualNetwork(right_network_name, right_network_subnet, right_network_mask, vnc, domain, project_name)
+        create_VirtualNetwork(left_network_name, left_network_subnet, left_network_mask, left_network_gateway, vnc, domain, project_name)
+        create_VirtualNetwork(right_network_name, right_network_subnet, right_network_mask, right_network_gateway, vnc, domain, project_name)
 
         create_NetworkPolicy(policy_name, left_network_name, right_network_name, vnc, domain, project_name)
         add_NetworkPolicy(policy_name, left_network_name, vnc, domain, project_name)
