@@ -235,6 +235,7 @@ resources:
     properties:
       name: { get_param: right_transparent_network_name }
 
+
   mgmt_VN:
     type: OS::ContrailV2::VirtualNetwork
     depends_on: [ mgmt_ipam ]
@@ -256,7 +257,7 @@ resources:
 
   left_VN:
     type: OS::ContrailV2::VirtualNetwork
-    depends_on: [ left_ipam, network_policy ]
+    depends_on: [ left_ipam ]
     properties:
       name: { get_param: left_network_name }
       network_ipam_refs: [{ get_resource: left_ipam }]
@@ -284,7 +285,7 @@ resources:
 
   right_VN:
     type: OS::ContrailV2::VirtualNetwork
-    depends_on: [ right_ipam, network_policy ]
+    depends_on: [ right_ipam ]
     properties:
       name: { get_param: right_network_name }
       network_ipam_refs: [{ get_resource: right_ipam }]
