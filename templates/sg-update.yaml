@@ -1,0 +1,44 @@
+heat_template_version: 2015-04-30
+
+description: HOT to update a security-group on the fly
+
+parameters:
+
+  image:
+    type: string
+    description: Name of the image
+
+  flavor:
+    type: string
+    description: Flavor type
+
+  network_id:
+    type: string
+    description: Network name or UUID
+
+  subnet_id:
+    type: string
+    description: Subnet name or UUID
+
+  security_group:
+    type: string
+    description: Name of the security group
+    
+resources:
+  
+  template_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_param: network_id }
+      fixed_ips:
+        - subnet_id: { get_param: subnet_id }
+      security_groups: [{ get_param: security_group }]
+
+  template_server:
+    type: OS::Nova::Server
+    properties:
+      name: test-server
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks:
+        - port: { get_resource: template_port }
