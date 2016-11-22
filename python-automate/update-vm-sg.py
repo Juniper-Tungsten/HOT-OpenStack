@@ -48,7 +48,7 @@ def update_SG(vnc, project, sg_old, sg_new):
 
 def main():
 
-	""" INIT FUNCTION """
+	""" MAIN FUNCTION """
 
 	username = os.environ.get('OS_USERNAME')
         password = os.environ.get('OS_PASSWORD')
@@ -69,6 +69,8 @@ def main():
 
 
 if __name__=="__main__":
+	
+	""" INIT """
 
 	start_time = timeit.default_timer()
 	main()
