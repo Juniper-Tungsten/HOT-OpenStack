@@ -13,7 +13,7 @@ from vnc_api import vnc_api
 
 def update_SG(vnc, project, sg_old, sg_new):
 
-	""" FUNCTION TO UPDATE SECURITY-GROUPS """
+	""" FUNCTION TO UPDATE SECURITY GROUPS """
 
 	try:
 		if sg_old != sg_new:
