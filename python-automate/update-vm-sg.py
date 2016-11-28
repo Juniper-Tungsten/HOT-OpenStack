@@ -13,7 +13,7 @@ from vnc_api import vnc_api
 
 def update_SG(vnc, project, sg_old, sg_new):
 
-	""" FUNCTION TO UPDATE SECURITY-GROUPS """
+	""" FUNCTION TO UPDATE SECURITY GROUPS """
 
 	try:
 		if sg_old != sg_new:
@@ -51,7 +51,7 @@ def update_SG(vnc, project, sg_old, sg_new):
 
 def main():
 
-	""" INIT FUNCTION """
+	""" MAIN FUNCTION """
 
 	username = os.environ.get('OS_USERNAME')
         password = os.environ.get('OS_PASSWORD')
@@ -72,6 +72,8 @@ def main():
 
 
 if __name__=="__main__":
+	
+	""" INIT """
 
 	start_time = timeit.default_timer()
 	main()
