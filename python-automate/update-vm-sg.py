@@ -26,13 +26,16 @@ def update_SG(vnc, project, sg_old, sg_new):
 					sg_ref_old = vmi_obj.get_security_group_refs()[0]['to'][2]
 
 					if sg_ref_old == sg_old:
+						start_time = timeit.default_timer()
 						vmi_obj.set_security_group(security_grp)
 						vnc.virtual_machine_interface_update(vmi_obj)
+						elapsed = timeit.default_timer() - start_time
 						sg_ref_new = vmi_obj.get_security_group_refs()[0]['to'][2]
+						print 'INFO: Security group on VMI "{}" updated from "{}" to "{}" in {} seconds'.format(vmi['fq_name'][2], sg_ref_old, sg_ref_new, elapsed)
 
-						print 'INFO: Security group on VMI "{}" updated from "{}" to "{}"'.format(vmi['fq_name'][2], sg_ref_old, sg_ref_new)
 					elif sg_ref_old == sg_new:
 						print 'INFO: Security group "{}" on VMI "{}" already exists'.format(sg_ref_old, vmi['fq_name'][2])				
+
 					else:
 						pass
 
