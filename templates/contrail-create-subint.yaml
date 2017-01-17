@@ -1,3 +1,8 @@
+# Config to bring up sub-interfaces
+
+# mod probe 8021q
+# ip link add link eth0 name eth0.50 type vlan id 50
+
 heat_template_version: 2015-04-30
 
 description: HOT to create sub-interface (VLAN) on instances
