@@ -1,7 +1,7 @@
 heat_template_version: 2015-10-15
 
 description: >
-  HOT to create a port-mirroring environment
+  HOT to demonstrate Port-Mirroring
 
 parameters:
   network_name:
@@ -79,7 +79,7 @@ resources:
                 {
                   virtual_machine_interface_properties_interface_mirror_mirror_to_analyzer_name: { get_param: server_traffic_analyzer_name },
                   virtual_machine_interface_properties_interface_mirror_mirror_to_analyzer_ip_address: { get_attr: [ template_TrafficAnalyzer_InstanceIp, instance_ip_address ] },
-                  virtual_machine_interface_properties_interface_mirror_mirror_to_routing_instance: { list_join: [':', [{ get_attr: [ template_VirtualNetwork, fq_name ] }], [{ get_param: network_name }]] },
+                  virtual_machine_interface_properties_interface_mirror_mirror_to_routing_instance: { list_join: [':', [{ list_join: [':', get_attr: [ template_VirtualNetwork, fq_name ]] }], [{ get_attr: [ template_VirtualNetwork, display_name ] }] ]},
                   virtual_machine_interface_properties_interface_mirror_mirror_to_udp_port: { get_param: server_traffic_analyzer_udp_port },
                 },
             },
@@ -125,3 +125,8 @@ resources:
       flavor: { get_param: flavor_type }
       networks:
         - port: { get_resource: template_TrafficAnalyzer_VirtualMachineInterface }
+
+outputs:
+  routing_instance:
+    value: { list_join: [':', [{ list_join: [':', get_attr: [ template_VirtualNetwork, fq_name ]] }], [{ get_attr: [ template_VirtualNetwork, display_name ] }] ]}
+
