@@ -25,11 +25,18 @@ parameters:
     description: Name of the analyzer VM
 
   server_traffic_analyzer_udp_port:
-    type: string
+    type: number
+    constraints:
+      - range: { min: 1030, max: 65000 }
     description: UDP port to which mirrored traffic is sent
 
   mirror_traffic_direction:
     type: string
+    constraints:
+      - allowed_values:
+        - ingress
+        - egress
+        - both
     description: Direction of traffic to be mirrored
 
   image_name:
