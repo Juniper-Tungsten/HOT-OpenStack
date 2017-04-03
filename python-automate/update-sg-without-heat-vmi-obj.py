@@ -10,7 +10,6 @@ import timeit
 import argparse
 from vnc_api import vnc_api
 
-
 def update_SG(vnc, project, sg_old, sg_new, virtual_network):
 
 	""" FUNCTION TO UPDATE SECURITY-GROUPS """
@@ -29,7 +28,6 @@ def update_SG(vnc, project, sg_old, sg_new, virtual_network):
 						vmi_obj = vnc.virtual_machine_interface_read(vmi['to'])
 						sg_ref_old = vmi_obj.get_security_group_refs()[0]['to'][2]
 						
-
 						if sg_ref_old == sg_old:
 							start_time = timeit.default_timer()
 							vmi_obj.set_security_group(security_grp)
@@ -43,10 +41,8 @@ def update_SG(vnc, project, sg_old, sg_new, virtual_network):
 
 						else:
 							pass
-
 				else:
 					pass
-
 		else:
 			print '\nERROR: Old & new security groups are the same\n'
 
