@@ -11,7 +11,7 @@ import argparse
 from vnc_api import vnc_api
 
 
-def update_SG(vnc, project, sg_old, sg_new):
+def update_SG(vnc, project, sg_old, sg_new, virtual_network):
 
 	""" FUNCTION TO UPDATE SECURITY-GROUPS """
 
@@ -21,7 +21,7 @@ def update_SG(vnc, project, sg_old, sg_new):
 			vmi_list = vnc.virtual_machine_interfaces_list()['virtual-machine-interfaces']
 
 			for vmi in vmi_list:
-				if vmi['fq_name'][1] == project and vmi['fq_name'][2].startswith('contrail'):
+				if vmi['fq_name'][1] == project and vmi['fq_name'][2].startswith(virtual_network + '-'):
 					vmi_obj = vnc.virtual_machine_interface_read(vmi['fq_name'])
 					sg_ref_old = vmi_obj.get_security_group_refs()[0]['to'][2]
 
@@ -53,23 +53,29 @@ def main():
 
 	""" INIT FUNCTION """
 
-	username = os.environ.get('OS_USERNAME')
-        password = os.environ.get('OS_PASSWORD')
-        api_server = os.environ.get('OS_AUTH_URL').split("//")[1].split(":")[0]
-        project = os.environ.get('OS_TENANT_NAME')
+	try:
 
-	parser = argparse.ArgumentParser()
-        parser.add_argument('--from', action='store', dest='old_sg', help='Old security-group name')
-	parser.add_argument('--to', action='store', dest='new_sg', help='New security-group name')
-        args = parser.parse_args()
+		username = os.environ.get('OS_USERNAME')
+        	password = os.environ.get('OS_PASSWORD')
+        	api_server = os.environ.get('OS_AUTH_URL').split("//")[1].split(":")[0]
+        	project = os.environ.get('OS_TENANT_NAME')
 
-	if args.old_sg and args.new_sg:
-		sg_old, sg_new = args.old_sg, args.new_sg
-		vnc = vnc_api.VncApi(username=username, password=password, api_server_host = api_server, tenant_name=project)
-		update_SG(vnc, project, sg_old, sg_new)
-	else:
-		print '\nMissing arguments\n\nUse "./update-sg.py --help"\n'
+		parser = argparse.ArgumentParser()
+		required = parser.add_argument_group('Required Arguments')
+        	required.add_argument('--from', action='store', dest='old_sg', help='Old security-group name')
+		required.add_argument('--to', action='store', dest='new_sg', help='New security-group name')
+		required.add_argument('--vn', action='store', dest='vn', help='Virtual-Network')
+        	args = parser.parse_args()
 
+		if args.old_sg and args.new_sg and args.vn:
+			sg_old, sg_new, virtual_network = args.old_sg, args.new_sg, args.vn
+			vnc = vnc_api.VncApi(username=username, password=password, api_server_host = api_server, tenant_name=project)
+			update_SG(vnc, project, sg_old, sg_new, virtual_network)
+		else:
+			parser.print_help()
+
+	except:
+		print '\nERROR: Please source openstackrc file\n'
 
 if __name__=="__main__":
 
