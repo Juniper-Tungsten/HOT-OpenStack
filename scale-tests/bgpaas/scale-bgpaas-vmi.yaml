@@ -1,6 +1,7 @@
 heat_template_version: 2015-04-30
 
-description: HOT to update Security-Groups on the fly
+description: >
+  HOT to create a BgpAsAService
 
 parameters:
 
