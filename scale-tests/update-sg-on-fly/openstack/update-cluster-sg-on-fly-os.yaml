@@ -65,7 +65,7 @@ resources:
       max_size: { get_param: server_count }
       min_size: { get_param: server_count }
       resource:
-        type: server.yaml
+        type: server_launch_os.yaml
         properties:
           server_name: { get_param: server_name }
           image_name: { get_param: image_name }
