@@ -1,3 +1,5 @@
+#!/bin/bash
+
 wget https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
 openstack image create cirros --disk-format qcow2 --public --container-format bare --file cirros-0.3.0-x86_64-disk.img
 openstack network create test-network
