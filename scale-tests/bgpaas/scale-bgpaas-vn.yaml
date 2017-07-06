@@ -21,10 +21,6 @@ parameters:
     type: number
     description: Number of VMIs to be created
 
-  autonomous_system:
-    type: number
-    description: AS number for BGPaaS
-
 resources:
 
   template_NetworkIpam:
@@ -55,9 +51,8 @@ resources:
     properties:
       count: { get_param: vmi_count }
       resource_def:
-        type: scale-bgpaas-vmi.yaml
+        type: scale-vmi.yaml
         properties:
           vmi_name:
             list_join: ['-',[ { get_param: vn_name }, '%index%' ]]
           vn_fqdn: { list_join: [':', { get_attr: [ template_VirtualNetwork, fq_name ] } ] }
-          autonomous_system: { get_param: autonomous_system }
