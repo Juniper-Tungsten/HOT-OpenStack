@@ -1,5 +1,4 @@
 #!/bin/bash
 
-ip_addr=$(ifconfig eth0 | grep "inet addr:" | cut -d ":" -f2 | cut -d " " -f1)
-echo "$ip_addr" > /tmp/hello-world.txt
-echo "$web_hostname" >> /tmp/hello-world.txt
+docker run -d --name webapp --net=host --restart always -e REDMINE_DB_MYSQL="$db_ipaddr" -e REDMINE_DB_PASSWORD=secret redmine
+echo "$db_ipaddr" > /tmp/hello-world.txt
