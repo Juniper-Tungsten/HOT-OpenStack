@@ -89,7 +89,8 @@ resources:
           template: |
             #!/bin/bash
             modprobe 8021q
-            vconfig add $primary_interface $vlan_tag
+            ip link add link $primary_interface name $primary_interface.$vlan_tag type vlan id $vlan_tag
+            #vconfig add $primary_interface $vlan_tag
             dhclient $sub_interface 
           params:
             $primary_interface: { get_param: primary_interface_2 }
